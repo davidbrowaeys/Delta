@@ -10,14 +10,14 @@ Once installed, checkout proxy setting if you are behind corporate proxy.
 
 ## Install Delta-CLI
 
-1. go to your local workspace and clone DeloitteForce-CLI repository:
+1. go to your local workspace and clone Delta-CLI repository:
 
   ```shell
   git clone ssh://git@dvcs.deloittedigital.com.au:22/dforce/delta-cli.git
   ``` 
 
 
-2. Go to DeloitteForce-CLI folder and install it globally using npm: 
+2. Go to Delta-CLI folder and install it globally using npm: 
 
   ```shell
   cd delta-cli
