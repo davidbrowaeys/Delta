@@ -1,70 +1,44 @@
-delta
-=====
+# DeloitteForce-CLI
 
-delta deployment command for sfdx
+A cli plugin for the Salesforce CLI built by David Browaeys containing a lot of helpful commands. 
 
-[![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
-[![Version](https://img.shields.io/npm/v/delta.svg)](https://npmjs.org/package/delta)
-[![Downloads/week](https://img.shields.io/npm/dw/delta.svg)](https://npmjs.org/package/delta)
-[![License](https://img.shields.io/npm/l/delta.svg)](https://github.com/davidbrowaeys/delta/blob/master/package.json)
+## Pre-requisite
+1. Install [SDFX CLI](https://developer.salesforce.com/tools/sfdxcli) 
 
-<!-- toc -->
-* [Usage](#usage)
-* [Commands](#commands)
-<!-- tocstop -->
-# Usage
-<!-- usage -->
-```sh-session
-$ npm install -g delta
-$ deloitte COMMAND
-running command...
-$ deloitte (-v|--version|version)
-delta/0.0.1 darwin-x64 node-v10.16.0
-$ deloitte --help [COMMAND]
-USAGE
-  $ deloitte COMMAND
-...
-```
-<!-- usagestop -->
-# Commands
-<!-- commands -->
-* [`deloitte hello [FILE]`](#deloitte-hello-file)
-* [`deloitte help [COMMAND]`](#deloitte-help-command)
+2. Install [node.js. + npm](https://nodejs.org/en/). 
+Once installed, checkout proxy setting if you are behind corporate proxy.
 
-## `deloitte hello [FILE]`
+## Install Delta-CLI
 
-describe the command here
+1. go to your local workspace and clone DeloitteForce-CLI repository:
 
-```
-USAGE
-  $ deloitte hello [FILE]
+  ```shell
+  git clone ssh://git@dvcs.deloittedigital.com.au:22/dforce/delta-cli.git
+  ``` 
 
-OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
 
-EXAMPLE
-  $ deloitte hello
-  hello world from ./src/hello.ts!
-```
+2. Go to DeloitteForce-CLI folder and install it globally using npm: 
 
-_See code: [src/commands/hello.ts](https://github.com/davidbrowaeys/delta/blob/v0.0.1/src/commands/hello.ts)_
+  ```shell
+  cd delta-cli
+  sudo npm install -g .
+  ```
 
-## `deloitte help [COMMAND]`
-
-display help for deloitte
-
-```
-USAGE
-  $ deloitte help [COMMAND]
-
-ARGUMENTS
-  COMMAND  command to show help for
-
-OPTIONS
-  --all  see all commands in CLI
-```
-
-_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v2.2.1/src/commands/help.ts)_
-<!-- commandsstop -->
+  ```shell
+  deloitte force:source:delta -r delta -m tags -p mytag
+  deloitte force:source:delta -r delta -m commitid -k 123456
+  deloitte force:source:delta -r delta -m branch -k origin/master
+  ```
+Here is an example of how to use the deloitte delta command in a pipeline JenkinsFile
+  ```groovy
+  def jsonSlurper = new JsonSlurper();
+  bat "deloitte force:source:delta -m branch -k master --json -r > delta.json";
+  stdout = readFile("delta.json").trim();
+  def delta = jsonSlurper.parseText(stdout);
+  def options = "";
+  if (delta.testClasses != null && delta.testClasses.isEmpty() == false){
+      options = "-l RunSpecifiedTest -r "+ delta.testClasses.join(',');
+  }
+  def cmd = "sfdx force:source:deploy -p "+delta.deltaMeta.join(',')+" -u prod -w 600 "+options;
+  bat cmd;
+  ```
