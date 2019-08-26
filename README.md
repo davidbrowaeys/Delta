@@ -1,4 +1,4 @@
-# DeloitteForce-CLI
+# Delta-CLI
 
 A cli plugin for the Salesforce CLI built by David Browaeys containing a lot of helpful commands. 
 
