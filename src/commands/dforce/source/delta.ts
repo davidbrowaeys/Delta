@@ -14,9 +14,9 @@ export default class  extends SfdxCommand {
   public static description = 'This command generate delta package by doing git diff.';
 
   public static examples = [
-  `$ deloitte force:source:delta -r delta -m tags -p mytag`,
-  `$ deloitte force:source:delta -r delta -m commitid -k 123456`,
-  `$ deloitte force:source:delta -r delta -m branch -k origin/master`
+  `$ deloitte force:source:delta -r -m tags -p mytag`,
+  `$ deloitte force:source:delta -r -m commitid -k 123456`,
+  `$ deloitte force:source:delta -r -m branch -k origin/master`
   ];
 
   public static args = [{name: 'file'}];
@@ -75,9 +75,15 @@ export default class  extends SfdxCommand {
     let deployOutput = '';
     if (deltaMeta && deltaMeta.length > 0){
       deployOutput += `-p "${deltaMeta.join(',')}"`;
+    }else{
+      deployOutput += `-p force-app`;
     }
-    if (this.testClasses && this.testClasses.length > 0){
-      deployOutput += ` -l RunSpecifiedTests -r "${this.testClasses.join(',')}"`; 
+    if (retrievetestclass){
+      if (this.testClasses && this.testClasses.length > 0){
+        deployOutput += ` -l RunSpecifiedTests -r "${this.testClasses.join(',')}"`; 
+      }else{
+        deployOutput += ` -l RunLocalTests`;
+      }
     }
     this.ux.log(deployOutput);
     return {deltaMeta, testClasses: this.testClasses}
