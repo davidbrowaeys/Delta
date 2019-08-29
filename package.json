@@ -15,13 +15,17 @@
     "tslib": "^1.10.0"
   },
   "devDependencies": {
-    "@oclif/dev-cli": "^1.22.2",
-    "@oclif/tslint": "^3.1.1",
-    "@types/node": "^10.14.16",
-    "globby": "^10.0.1",
+    "@oclif/dev-cli": "^1",
+    "@oclif/plugin-help": "^2",
+    "@oclif/test": "^1",
+    "@salesforce/dev-config": "^1.5.0",
+    "@types/mocha": "^5.2.7",
+    "@types/node": "^10.14.13",
+    "@types/puppeteer": "^1.12.4",
     "ts-node": "^8.3.0",
     "tslint": "^5.19.0",
-    "typescript": "^3.5.3"
+    "typescript": "^3.5.3",
+    "sfdx-cli": "^7.15.3"
   },
   "engines": {
     "node": ">=8.0.0"
@@ -29,7 +33,6 @@
   "files": [
     "/bin",
     "/lib",
-    "/npm-shrinkwrap.json",
     "/oclif.manifest.json"
   ],
   "homepage": "https://github.com/davidbrowaeys/delta",
