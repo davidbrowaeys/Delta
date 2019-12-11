@@ -15,9 +15,9 @@ export default class  extends SfdxCommand {
   public static description = 'This command generate delta package by doing git diff.';
 
   public static examples = [
-  `$ deloitte force:source:delta -r -m tags -p mytag`,
-  `$ deloitte force:source:delta -r -m commitid -k 123456`,
-  `$ deloitte force:source:delta -r -m branch -k origin/master`
+  `$ sfdx dforce:source:delta -r -m tags -k mytag`,
+  `$ sfdx dforce:source:delta -r -m commitid -k 123456`,
+  `$ sfdx dforce:source:delta -r -m branch -k origin/master`
   ];
 
   public static args = [{name: 'file'}];
@@ -26,8 +26,8 @@ export default class  extends SfdxCommand {
     mode: flags.string({char: 'm',description: 'commitid|tags|branch', default:"commitid"}),
     deltakey: flags.string({char: 'k', description: 'commit id, tags prefix or name, branch name'}),
     metatype:flags.string({char: 't',description: 'metatype comma separated, i.e.: objects,classes,workflows', default: 'objects,classes,workflows'}),
-    basedir: flags.string({char: 'd', default:'force-app/main/default',description: 'path of base directory'}),
-    testlevel: flags.string({char: 'l', default:'NoTestRun',description: 'path of base directory'})
+    basedir: flags.string({char: 'd', description: 'path of base directory', default:'force-app/main/default'}),
+    testlevel: flags.string({char: 'l', description: 'if set to "RunSpecifiedTests", command will try to calculate test classes dependencies.', default:'NoTestRun'})
   };
 
   // Comment this out if your command does not require an org username
