@@ -42,3 +42,13 @@ Here is an example of how to use the deloitte delta command in a pipeline Jenkin
   def cmd = "sfdx force:source:deploy -p "+delta.deltaMeta.join(',')+" -u prod -w 600 "+options;
   bat cmd;
   ```
+
+Another example using azure pipeline 
+```
+- script: |
+    cd "$(System.ArtifactsDirectory)/app"
+    options=$(sfdx dforce:source:delta -m branch -k ${{parameters.compareWith}} -l ${{parameters.testlevel}})
+    echo sfdx force:source:deploy $options -u $(Environment.Name) -l ${{parameters.testlevel}} -w 600
+    sfdx force:source:deploy $options -u $(Environment.Name) -l ${{parameters.testlevel}} -w 600
+  displayName: "sfdx deploy"
+```
