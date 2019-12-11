@@ -25,9 +25,9 @@ Once installed, checkout proxy setting if you are behind corporate proxy.
   ```
 
   ```shell
-  deloitte force:source:delta -r delta -m tags -p mytag
-  deloitte force:source:delta -r delta -m commitid -k 123456
-  deloitte force:source:delta -r delta -m branch -k origin/master
+  sfdx dforce:source:delta -r delta -m tags -k mytag
+  sfdx dforce:source:delta -r delta -m commitid -k 123456
+  sfdx dforce:source:delta -r delta -m branch -k origin/master
   ```
 Here is an example of how to use the deloitte delta command in a pipeline JenkinsFile
   ```groovy
