@@ -32,7 +32,7 @@ Once installed, checkout proxy setting if you are behind corporate proxy.
 Here is an example of how to use the deloitte delta command in a pipeline JenkinsFile
   ```groovy
   def jsonSlurper = new JsonSlurper();
-  bat "deloitte force:source:delta -m branch -k master --json -r > delta.json";
+  bat "sfdx dforce:source:delta -m branch -k master --json -r > delta.json";
   stdout = readFile("delta.json").trim();
   def delta = jsonSlurper.parseText(stdout);
   def options = "";
