@@ -5,11 +5,7 @@ import { SfdxError } from '@salesforce/core';
 const fs = require("fs-extra");
 const path = require('path');
 const exec = require('child_process').execSync;
-
-function onlyUnique(value:any, index:any, self:any) { 
-  return self.indexOf(value) === index && value.startsWith('force-app');
-}
-
+let basedir:string;
 export default class  extends SfdxCommand {
 
   public static description = 'This command generate delta package by doing git diff.';
@@ -46,9 +42,9 @@ export default class  extends SfdxCommand {
   public async run() {
     let mode = this.flags.mode;
     let deltakey = this.flags.deltakey;
-    let basedir = this.flags.basedir;
     let testlevel = this.flags.testlevel;
     let metatypes = this.flags.metatype.split(',');
+    basedir = this.flags.basedir;
 
     let deltaMeta = this.getDeltaChanges(mode,deltakey);
     //find dependent test classes
@@ -77,7 +73,7 @@ export default class  extends SfdxCommand {
     if (deltaMeta && deltaMeta.length > 0){
       deployOutput += `-p ${deltaMeta.join(',')}`;
     }else{
-      deployOutput += `-p force-app`;
+      deployOutput += `-p ${basedir}`;
     }
     if (testlevel === 'RunSpecifiedTests'){ 
       if (this.testClasses && this.testClasses.length > 0){
@@ -88,6 +84,9 @@ export default class  extends SfdxCommand {
     }
     this.ux.log(deployOutput);
     return {deltaMeta, testClasses: this.testClasses}
+  }
+  private onlyUnique(value:any, index:any, self:any) { 
+    return self.indexOf(value) === index && value.startsWith(basedir);
   }
   private getTestClasses(classpath:string, type:string, element:string){
     //check if the element is a test classes
@@ -121,7 +120,7 @@ export default class  extends SfdxCommand {
     gitresult = exec(`git diff-tree --no-commit-id --name-only -r ${deltakey}`).toString().split('\n'); //this only work with specific commit ids, how to get file that changed since last tag ? 
     }
     //filter unnecessary files
-    var files = gitresult.filter( onlyUnique );
+    var files = gitresult.filter( this.onlyUnique );
     return files;
   }
 }
