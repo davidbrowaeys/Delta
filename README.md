@@ -52,5 +52,3 @@ Another example using azure pipeline
     sfdx force:source:deploy $options -u $(Environment.Name) -l ${{parameters.testlevel}} -w 600
   displayName: "sfdx deploy"
 ```
-
-Enjoy
