@@ -1,5 +1,5 @@
 {
-  "name": "delta",
+  "name": "sfdxdelta",
   "description": "delta deployment command for sfdx",
   "version": "0.0.1",
   "author": "David Browaeys",
