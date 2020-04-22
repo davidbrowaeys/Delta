@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "author": "David Browaeys",
   "bin": {
-    "deloitte": "./bin/run"
+    "dxb": "./bin/run"
   },
   "bugs": "https://github.com/davidbrowaeys/delta/issues",
   "dependencies": {
@@ -43,7 +43,7 @@
   "main": "lib/index.js",
   "oclif": {
     "commands": "./lib/commands",
-    "bin": "deloitte",
+    "bin": "dxb",
     "plugins": [
       "@oclif/plugin-help"
     ]

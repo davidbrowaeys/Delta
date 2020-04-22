@@ -10,12 +10,10 @@ Once installed, checkout proxy setting if you are behind corporate proxy.
 
 ## Install Delta-CLI
 
-1. go to your local workspace and clone Delta-CLI repository:
-
-  ```shell
-  git clone ssh://git@dvcs.deloittedigital.com.au:22/dforce/delta-cli.git
-  ``` 
-
+1. go to your local workspace and clone Delta-CLI repository
+```shell
+git clone https://github.com/davidbrowaeys/Delta.git
+```
 
 2. Go to Delta-CLI folder and install it globally using npm: 
 
@@ -25,14 +23,14 @@ Once installed, checkout proxy setting if you are behind corporate proxy.
   ```
 
   ```shell
-  sfdx dforce:source:delta -r delta -m tags -k mytag
-  sfdx dforce:source:delta -r delta -m commitid -k 123456
-  sfdx dforce:source:delta -r delta -m branch -k origin/master
+  sfdx dxb:source:delta -r delta -m tags -k mytag
+  sfdx dxb:source:delta -r delta -m commitid -k 123456
+  sfdx dxb:source:delta -r delta -m branch -k origin/master
   ```
-Here is an example of how to use the deloitte delta command in a pipeline JenkinsFile
+Here is an example of how to use the delta command in a pipeline JenkinsFile
   ```groovy
   def jsonSlurper = new JsonSlurper();
-  bat "sfdx dforce:source:delta -m branch -k master --json -r > delta.json";
+  bat "sfdx dxb:source:delta -m branch -k master --json -r > delta.json";
   stdout = readFile("delta.json").trim();
   def delta = jsonSlurper.parseText(stdout);
   def options = "";
@@ -47,7 +45,7 @@ Another example using azure pipeline
 ```
 - script: |
     cd "$(System.ArtifactsDirectory)/app"
-    options=$(sfdx dforce:source:delta -m branch -k ${{parameters.compareWith}} -l ${{parameters.testlevel}})
+    options=$(sfdx dxb:source:delta -m branch -k ${{parameters.compareWith}} -l ${{parameters.testlevel}})
     echo sfdx force:source:deploy $options -u $(Environment.Name) -l ${{parameters.testlevel}} -w 600
     sfdx force:source:deploy $options -u $(Environment.Name) -l ${{parameters.testlevel}} -w 600
   displayName: "sfdx deploy"
